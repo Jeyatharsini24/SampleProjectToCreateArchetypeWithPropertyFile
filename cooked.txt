@@ -1,0 +1,86 @@
+mvn archetype:create-from-project -Darchetype.properties=../archetype.properties
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+inside archetype there is a pom:
+change groupId (should be same as project's groupId) : <groupId>com.jeya.maven.groupId</groupId>
+change artifactId and name: <artifactId>jeyaarchetype</artifactId> <name>jeyaarchetype</name>
+change version: <version>0.1</version>
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+In pom file of archetype
+-DarchetypeGroupId value should be value of groupId in archetype
+-DarchetypeArtifactId value should be value of artifactId in archetype
+-DarchetypeVersion value should be value of version in archetype
+
+modify generate-project-by-this.bat
+######################################################################################################################################################################
+
+@echo off
+set arg1=archetype.properties
+
+For /F "tokens=1* delims==" %%A IN (%arg1%) DO (
+	IF "%%A"=="package" set package=%%B
+	IF "%%A"=="version" set version=%%B 
+	IF "%%A"=="groupId" set groupId=%%B 
+	IF "%%A"=="artifactId" set artifactId=%%B 
+	IF "%%A"=="schema" set schema=%%B
+	IF "%%A"=="namespace" set namespace=%%B 	
+	IF "%%A"=="svnConnection" set svnConnection=%%B 
+	IF "%%A"=="svnDeveloperConnection" set svnDeveloperConnection=%%B 
+	IF "%%A"=="dbServer" set dbServer=%%B
+	IF "%%A"=="dbPort" set dbPort=%%B
+	IF "%%A"=="dbUser" set dbUser=%%B	
+	IF "%%A"=="dbPassword" set dbPassword=%%B
+	IF "%%A"=="ccParentVersion" set ccParentVersion=%%B
+	)
+call mvn archetype:generate -B -DarchetypeGroupId=com.jeya.groupId -DarchetypeArtifactId=jeyaarchetype -DarchetypeVersion=0.1 
+-DgroupId=%groupId% -DartifactId=%artifactId% -Dversion=%version% -Dpackage=%package% -Dschema=%schema% -Dnamespace=%namespace% -DdbServer=%dbServer% -DdbPort=%dbPort% 
+-DdbUser=%dbUser% -DccParentVersion=%ccParentVersion% 
+######################################################################################################################################################################
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+modify archetype-metadata.xml. include requiredProperties inside archetype-descriptor
+<fileSet filtered="true" packaged="true" encoding="UTF-8" > add packaged="true"
+######################################################################################################################################################################
+<requiredProperties>
+  <requiredProperty key="ccParentVersion">
+      <defaultValue>2.0.59</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="namespace">
+      <defaultValue>http://namespace.jeya.com/platform/sdk/traning/</defaultValue>
+    </requiredProperty>
+	<requiredProperty key="schema">
+      <defaultValue>jeyatraining</defaultValue>
+    </requiredProperty>
+	<requiredProperty key="dbServer">
+      <defaultValue>CSLK-MIYAAV</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="dbPort">
+      <defaultValue>1433</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="dbUser">
+      <defaultValue>jeyauser</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="dbPassword">
+      <defaultValue>jeyapassword</defaultValue>
+    </requiredProperty>
+	 <requiredProperty key="svnDeveloperConnection">
+      <defaultValue>scm:svn:https://subversion.url.com/miyaav/Standard/test/maven/sample</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="svnUrl">
+      <defaultValue>https://subversion.url.com/miyaav/Standard/test/maven/sample</defaultValue>
+    </requiredProperty>
+    <requiredProperty key="svnConnection">
+      <defaultValue>scm:svn:https://subversion.url.com/miyaav/Standard/test/maven/sample</defaultValue>
+    </requiredProperty>
+	</requiredProperties>
+######################################################################################################################################################################
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+remove test folder from archetype and mvn clean install for archetype so that it will be added to local repository
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+use generate-project-by-this.bat to generate project
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+refer tree.txt to check the sample directory structure after generate a sample project from archetype
