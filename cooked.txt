@@ -3,9 +3,12 @@ mvn archetype:create-from-project -Darchetype.properties=../archetype.properties
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 inside archetype there is a pom:
-change groupId (should be same as project's groupId) : <groupId>com.jeya.maven.groupId</groupId>
+change groupId (should be same as project's groupId) : <groupId>com.jeya.maven</groupId>
 change artifactId and name: <artifactId>jeyaarchetype</artifactId> <name>jeyaarchetype</name>
 change version: <version>0.1</version>
+
+com.jeya.maven : my core package which is expected to be core package
+package should contain groupId in archetype.properties (Eg: package: com.jeya.maven.sample, groupId: com.jeya.maven)
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 In pom file of archetype
 -DarchetypeGroupId value should be value of groupId in archetype
@@ -33,7 +36,7 @@ For /F "tokens=1* delims==" %%A IN (%arg1%) DO (
 	IF "%%A"=="dbPassword" set dbPassword=%%B
 	IF "%%A"=="ccParentVersion" set ccParentVersion=%%B
 	)
-call mvn archetype:generate -B -DarchetypeGroupId=com.jeya.groupId -DarchetypeArtifactId=jeyaarchetype -DarchetypeVersion=0.1 
+call mvn archetype:generate -B -DarchetypeGroupId=com.jeya.maven -DarchetypeArtifactId=jeyaarchetype -DarchetypeVersion=0.1 
 -DgroupId=%groupId% -DartifactId=%artifactId% -Dversion=%version% -Dpackage=%package% -Dschema=%schema% -Dnamespace=%namespace% -DdbServer=%dbServer% -DdbPort=%dbPort% 
 -DdbUser=%dbUser% -DccParentVersion=%ccParentVersion% 
 ######################################################################################################################################################################
