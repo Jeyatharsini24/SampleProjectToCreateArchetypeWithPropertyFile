@@ -81,6 +81,7 @@ modify archetype-metadata.xml. include requiredProperties inside archetype-descr
 
 remove test folder from archetype and mvn clean install for archetype so that it will be added to local repository
 
+{symbol_dollar} should be removed in archetype\src\main\resources\archetype-resources\src\MainClass.java and SubClass.java
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 use generate-project-by-this.bat to generate project

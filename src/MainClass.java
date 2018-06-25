@@ -1,4 +1,4 @@
-package ${package}.main;
+package ${package};
 
 public class MainClass {
 	String value = "${namespace}";
