@@ -41,6 +41,14 @@ call mvn archetype:generate -B -DarchetypeGroupId=com.jeya.maven -DarchetypeArti
 -DdbUser=%dbUser% -DccParentVersion=%ccParentVersion% 
 ######################################################################################################################################################################
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+In generated archetype:
+
+remove test folder from archetype and mvn clean install for archetype so that it will be added to local repository
+
+{symbol_dollar} should be removed in archetype\src\main\resources\archetype-resources\src\MainClass.java and SubClass.java
+
+maven is unable to create inside package (Eg: in my case, main folder cannot be created. So I need to create it myself and place the class inside that folder
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 modify archetype-metadata.xml. include requiredProperties inside archetype-descriptor
 <fileSet filtered="true" packaged="true" encoding="UTF-8" > add packaged="true"
 ######################################################################################################################################################################
@@ -77,14 +85,8 @@ modify archetype-metadata.xml. include requiredProperties inside archetype-descr
     </requiredProperty>
 	</requiredProperties>
 ######################################################################################################################################################################
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-remove test folder from archetype and mvn clean install for archetype so that it will be added to local repository
-
-{symbol_dollar} should be removed in archetype\src\main\resources\archetype-resources\src\MainClass.java and SubClass.java
-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 use generate-project-by-this.bat to generate project
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-refer tree.txt to check the sample directory structure after generate a sample project from archetype
+refer tree.txt to check the sample directory structure before generate a sample project from archetype
